@@ -2,6 +2,17 @@
 name = "elysiumparser"
 version = "0.1.0"
 edition = "2024"
+description = "Log file parser with support for complex search expressions and compressed files"
+authors = ["Your Name <your.email@example.com>"]
+license = "MIT"
+
+[lib]
+name = "elysiumparser"
+path = "src/lib.rs"
+
+[[bin]]
+name = "elysiumparser"
+path = "src/main.rs"
 
 [dependencies]
 clap = { version = "4.4", features = ["derive"] }

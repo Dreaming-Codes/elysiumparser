@@ -1,0 +1,39 @@
+name: Build Windows Binary
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        profile: minimal
+        override: true
+        target: x86_64-pc-windows-msvc
+
+    - name: Build Release 
+      uses: actions-rs/cargo@v1
+      with:
+        command: build
+        args: --release
+
+    - name: Rename binary with .exe extension
+      run: |
+        cp target/release/elysiumparser.exe elysiumparser-windows.exe
+
+    - name: Upload Windows Executable
+      uses: actions/upload-artifact@v4
+      with:
+        name: elysiumparser-windows
+        path: elysiumparser-windows.exe
